@@ -314,4 +314,10 @@ __mise_bootstrap() {
     test -f "$MISE_INSTALL_PATH" || install
 }
 __mise_bootstrap
-exec "$MISE_INSTALL_PATH" "$@"
+if [ "$(basename $0)" == "mise" ]
+then
+    exec "$MISE_INSTALL_PATH" "$@"
+  else
+    exec "$MISE_INSTALL_PATH" exec -- "$(basename $0)" "$@"
+fi
+
